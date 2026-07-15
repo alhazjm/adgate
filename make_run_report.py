@@ -216,27 +216,39 @@ def stages_html(costs):
 
 CSS = """
 :root{
-  --bg:#FAF4EE;--bg-2:#F1E7DC;--ink:#1B1210;--ink-2:#3A2C27;--muted:#8B776C;
-  --muted-2:#AC9C90;--rule:#E6D8CB;--rule-soft:#EFE5D9;--accent:#C20D2E;
-  --ok:#1F6B4A;--warn:#B0641C;--danger:#C20D2E;--ok-soft:#DCEAE1;
-  --warn-soft:#F4E5CF;--danger-soft:#F6DAD9;
-  --display:'Archivo','Inter Tight',ui-sans-serif,system-ui,-apple-system,sans-serif;
-  --sans:'Inter Tight',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --bg:#FBFBFA;--bg-2:#F2F1F7;--ink:#1E1656;--ink-2:#443D7C;--muted:#8B87A8;
+  --muted-2:#B7B4CB;--rule:#E7E5F1;--rule-soft:#F0EFF7;--accent:#F0047F;
+  --orange:#FF7900;--yellow:#FFC700;
+  --ok:#0E7A4E;--warn:#D96A00;--danger:#F0047F;--ok-soft:#DEF0E7;
+  --warn-soft:#FFE8D2;--danger-soft:#FCE0EF;
+  --display:'Poppins',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --sans:'Poppins',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --max:1180px;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
-  font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{margin:0;background-color:var(--bg);
+  background-image:radial-gradient(var(--rule) 1.15px, transparent 1.15px);
+  background-size:22px 22px;
+  color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
 a:hover{color:var(--accent);text-decoration-color:var(--accent)}
 code{font-family:var(--mono);font-size:0.86em;background:var(--bg-2);padding:1px 5px;border-radius:2px}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
-header.page{border-bottom:1px solid var(--rule);padding:26px 0 22px}
-.eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.16em;color:var(--accent);margin:0 0 9px}
-h1{font-family:var(--display);font-size:36px;line-height:1;letter-spacing:-.028em;
-  font-weight:800;margin:0}
+header.page{position:relative;padding:34px 0 48px;border-bottom:none;
+  background:
+    radial-gradient(60% 130% at 6% 12%, rgba(255,199,0,.55), transparent 58%),
+    radial-gradient(70% 150% at 30% 45%, rgba(255,0,153,.40), transparent 62%),
+    radial-gradient(60% 140% at 66% 0%, rgba(255,121,0,.42), transparent 58%),
+    radial-gradient(90% 160% at 92% 85%, rgba(240,4,127,.30), transparent 65%),
+    linear-gradient(135deg,#FFE9F5 0%,#FFF3E4 100%)}
+header.page .wrap{background:#fff;border-radius:28px;
+  box-shadow:0 16px 48px rgba(30,22,86,.14);padding:30px 40px 26px}
+.eyebrow{font-family:var(--display);font-size:11px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--accent);margin:0 0 10px}
+h1{font-family:var(--display);font-size:38px;line-height:1.08;letter-spacing:-.02em;
+  font-weight:700;margin:0}
 .meta{margin:12px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--muted);
   letter-spacing:.02em;line-height:1.7}
 .meta b{color:var(--ink);font-weight:600}
@@ -245,7 +257,7 @@ section{margin:0;padding:30px 0 34px;border-bottom:1px solid var(--rule)}
 section:last-of-type{border-bottom:none}
 .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
   border-top:2px solid var(--ink);padding-top:14px;margin-bottom:20px}
-.sec-head h2{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.018em;margin:0}
+.sec-head h2{font-family:var(--display);font-size:21px;font-weight:600;letter-spacing:-.012em;margin:0}
 .sec-head .right{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
   color:var(--muted);text-transform:uppercase;text-align:right}
 .sec-note{font-size:13.5px;color:var(--ink-2);max-width:720px;margin:0 0 20px}
@@ -260,9 +272,11 @@ section:last-of-type{border-bottom:none}
 .ev-label em{font-style:italic;color:var(--ink)}
 .ev-detail{display:block;font-size:12px;color:var(--muted);margin-top:2px;font-style:normal}
 /* refusal log */
-.rf{background:var(--bg-2);border-left:3px solid var(--danger);padding:14px 18px;
-  margin:0 0 14px;border-radius:0 2px 2px 0}
+.rf{background:#fff;border:1px solid var(--rule);border-left:4px solid var(--danger);
+  padding:14px 18px;margin:0 0 14px;border-radius:14px;
+  box-shadow:0 4px 16px rgba(30,22,86,.05)}
 .rf.warn{border-left-color:var(--warn)}
+.rf.ok{border-left-color:var(--ok)}
 .rf.live{background:var(--danger-soft)}
 .rf-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
 .rf-title{font-family:var(--display);font-weight:700;font-size:14.5px;letter-spacing:-.01em}
@@ -296,11 +310,11 @@ td.vcell .vs{display:block;font-family:var(--mono);font-size:10px;color:var(--mu
 td.reason{color:var(--muted);font-size:11.5px;max-width:320px}
 /* unit economics */
 .hero-num{display:grid;gap:6px;margin:4px 0 26px}
-.hero-num .k-label{font-family:var(--mono);font-size:10.5px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
-.hero-num .n{font-family:var(--display);font-weight:800;font-size:92px;line-height:.95;
-  letter-spacing:-.04em;color:var(--ink)}
-.hero-num .n small{font-size:38px;font-weight:700;letter-spacing:-.02em;color:var(--muted);margin-left:8px}
+.hero-num .k-label{font-family:var(--display);font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--accent)}
+.hero-num .n{font-family:var(--display);font-weight:700;font-size:92px;line-height:.95;
+  letter-spacing:-.03em;color:var(--ink)}
+.hero-num .n small{font-size:38px;font-weight:600;letter-spacing:-.01em;color:var(--orange);margin-left:8px}
 .hero-num .sub{font-family:var(--mono);font-size:12px;color:var(--ink-2);letter-spacing:.01em}
 table.stages{max-width:640px;font-size:12.5px}
 table.stages tbody td{font-family:var(--mono);font-size:11.5px;padding:8px 14px 8px 0;
@@ -317,10 +331,11 @@ footer.page a{color:var(--muted)}
   .hero-num .n{font-size:64px}
 }
 @media print{
-  body{background:#fff;color:#000;font-size:8pt;line-height:1.35;
+  body{background:#fff;background-image:none;color:#000;font-size:8pt;line-height:1.35;
     -webkit-print-color-adjust:exact;print-color-adjust:exact}
   .wrap{max-width:none;padding:0}
-  header.page{padding:0 0 8px}
+  header.page{padding:0 0 8px;background:none}
+  header.page .wrap{box-shadow:none;border-radius:0;padding:0;background:none}
   h1{font-size:19pt}
   .meta{margin-top:4px;font-size:6.5pt;line-height:1.5}
   main{padding:0}
@@ -398,7 +413,7 @@ def build():
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>adgate &mdash; run report</title>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>{CSS}</style>
 </head>
 <body>
