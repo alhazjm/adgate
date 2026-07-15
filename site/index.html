@@ -16,7 +16,7 @@
   --display:'Poppins',ui-sans-serif,system-ui,-apple-system,sans-serif;
   --sans:'Poppins',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --max:880px;
+  --max:1180px;
 }
 *{box-sizing:border-box}
 body{margin:0;background-color:var(--bg);
@@ -36,11 +36,22 @@ header.page{position:relative;padding:34px 0 48px;
     radial-gradient(90% 160% at 92% 85%, rgba(240,4,127,.30), transparent 65%),
     linear-gradient(135deg,#FFE9F5 0%,#FFF3E4 100%)}
 header.page .wrap{background:#fff;border-radius:28px;
-  box-shadow:0 16px 48px rgba(30,22,86,.14);padding:28px 34px 24px}
+  box-shadow:0 16px 48px rgba(30,22,86,.14);padding:30px 40px 26px}
 .eyebrow{font-family:var(--display);font-size:11px;font-weight:600;text-transform:uppercase;
   letter-spacing:.18em;color:var(--accent);margin:0 0 10px}
-h1{font-family:var(--display);font-size:36px;line-height:1.08;letter-spacing:-.02em;font-weight:700;margin:0}
+h1{font-family:var(--display);font-size:38px;line-height:1.08;letter-spacing:-.02em;font-weight:700;margin:0}
 .meta{margin:12px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.02em;line-height:1.7}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn-glow,.btn-plain{display:inline-block;font-family:var(--display);font-weight:600;font-size:14px;
+  padding:13px 26px;border-radius:999px;text-decoration:none;line-height:1}
+.btn-glow{background:var(--ink);color:#fff;animation:glowpulse 2.4s ease-in-out infinite}
+.btn-glow:hover{background:var(--accent);color:#fff}
+.btn-plain{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+.btn-plain:hover{border-color:var(--accent);color:var(--accent)}
+@keyframes glowpulse{
+  0%,100%{box-shadow:0 6px 18px rgba(30,22,86,.18)}
+  50%{box-shadow:0 0 28px 5px rgba(240,4,127,.45), 0 6px 18px rgba(30,22,86,.18)}}
+.tool{max-width:920px}
 main{padding:26px 0 40px}
 .lede{font-size:14.5px;color:var(--ink-2);max-width:680px;margin:0 0 26px}
 h2{font-family:var(--display);font-size:19px;font-weight:600;letter-spacing:-.012em;margin:0 0 6px}
@@ -112,9 +123,11 @@ footer.page a{color:var(--muted)}
   <p class="eyebrow">adgate &middot; live demo</p>
   <h1>Try the claims gate</h1>
   <p class="meta">the deterministic rule layer of a gated ad-creative pipeline &middot;
-    runs entirely in your browser, no model call, no cost &middot;
-    <a href="./run-report.html">full run report</a> &middot;
-    <a href="https://github.com/alhazjm/adgate">source on GitHub</a></p>
+    runs entirely in your browser, no model call, no cost</p>
+  <div class="cta-row">
+    <a class="btn-glow" href="./run-report.html">See the full run report &rarr;</a>
+    <a class="btn-plain" href="https://github.com/alhazjm/adgate">Source on GitHub</a>
+  </div>
 </div></header>
 <main><div class="wrap">
 
@@ -124,6 +137,7 @@ baby-care brand's Singapore market. Ten do-not-say rules run before any model is
 advertising code, regulator precedent, or real customer complaints. Load a sample below
 to see it fire, or write your own line and test it.</p>
 
+<div class="tool">
 <h2>Start with a sample</h2>
 <p class="sec-sub">The first card is the brand&rsquo;s own published copy. The middle two are
 real outputs from the shipped pipeline run: the same variant before and after the bounded
@@ -159,6 +173,7 @@ line the ad is for &mdash; two rules are line-specific.</p>
 </div>
 
 <div id="result"></div>
+</div>
 
 <section class="rules">
   <h2>The ten rules, and the evidence behind them</h2>
