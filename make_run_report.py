@@ -495,6 +495,10 @@ def build():
 <meta name="robots" content="noindex">
 <title>adgate &mdash; run report</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- GoatCounter analytics: no cookies; ignores localhost; host-prefix callback so all
+     hadialhazim.com subdomains share one dashboard with distinguishable paths -->
+<script>window.goatcounter = {{ path: function(p) {{ return location.host + p }} }};</script>
+<script data-goatcounter="https://hadialhazim.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>{CSS}</style>
 </head>
 <body>
@@ -680,9 +684,10 @@ def build():
 
 </div></main>
 <footer class="page"><div class="wrap">
-  Hadi Al-Hazim &middot; the pipeline is a fixed-stage process with one bounded agentic
-  step; this page is its per-run output &middot; built on public voice-of-customer data only
-  &middot; not affiliated with or endorsed by any brand named
+  <a href="https://hadialhazim.com">Hadi Al-Hazim</a> &middot; the pipeline is a
+  fixed-stage process with one bounded agentic step; this page is its per-run output
+  &middot; built on public voice-of-customer data only &middot; not affiliated with or
+  endorsed by any brand named
 </div></footer>
 <script>
 /* no external scripts; this only opens the collapsed sections when printing */
