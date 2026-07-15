@@ -1,0 +1,40 @@
+{
+  "stages": {
+    "briefs": {
+      "calls": 8,
+      "input_tokens": 3799,
+      "output_tokens": 1961,
+      "cost_usd": 0.013604000000000002
+    },
+    "variants": {
+      "calls": 8,
+      "input_tokens": 4481,
+      "output_tokens": 7430,
+      "cost_usd": 0.041631
+    },
+    "gate-voice-judge": {
+      "calls": 51,
+      "input_tokens": 28819,
+      "output_tokens": 5074,
+      "cost_usd": 0.27094499999999994
+    },
+    "repair": {
+      "calls": 17,
+      "input_tokens": 10880,
+      "output_tokens": 2788,
+      "cost_usd": 0.024820000000000005
+    }
+  },
+  "total_cost_usd": 0.351,
+  "unpriced_models": [],
+  "cost_per_100_gated_variants_usd": 0.7312,
+  "variants_gated": 48,
+  "repair": {
+    "candidates": 15,
+    "salvaged": 15,
+    "human_queue": 0,
+    "attempts_total": 17,
+    "budget_exhausted": false,
+    "repair_cost_usd": 0.02482
+  }
+}

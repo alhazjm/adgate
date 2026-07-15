@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>adgate &mdash; try the gate</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF4EE;--bg-2:#F1E7DC;--ink:#1B1210;--ink-2:#3A2C27;--muted:#8B776C;
+  --muted-2:#AC9C90;--rule:#E6D8CB;--rule-soft:#EFE5D9;--accent:#C20D2E;
+  --ok:#1F6B4A;--warn:#B0641C;--danger:#C20D2E;--ok-soft:#DCEAE1;
+  --warn-soft:#F4E5CF;--danger-soft:#F6DAD9;
+  --display:'Archivo','Inter Tight',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --sans:'Inter Tight',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --max:880px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
+a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+code{font-family:var(--mono);font-size:.86em;background:var(--bg-2);padding:1px 5px;border-radius:2px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+header.page{border-bottom:1px solid var(--rule);padding:26px 0 22px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.16em;color:var(--accent);margin:0 0 9px}
+h1{font-family:var(--display);font-size:34px;line-height:1.05;letter-spacing:-.028em;font-weight:800;margin:0}
+.meta{margin:12px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.02em;line-height:1.7}
+main{padding:26px 0 40px}
+.lede{font-size:14.5px;color:var(--ink-2);max-width:660px;margin:0 0 22px}
+label{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin:16px 0 6px}
+select,input[type=text],textarea{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);
+  background:#fff;border:1px solid var(--rule);border-radius:3px;padding:10px 12px;outline:none}
+select:focus,input:focus,textarea:focus{border-color:var(--ink)}
+textarea{min-height:96px;resize:vertical}
+.row{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:end}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 0}
+button{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;cursor:pointer;border-radius:3px;padding:12px 22px;border:1px solid var(--ink)}
+button.primary{background:var(--ink);color:var(--bg)}
+button.primary:hover{background:var(--accent);border-color:var(--accent)}
+button.ghost{background:transparent;color:var(--ink-2)}
+button.ghost:hover{border-color:var(--accent);color:var(--accent)}
+#result{margin-top:28px}
+.verdict-card{border-left:4px solid var(--muted);background:var(--bg-2);padding:18px 20px;border-radius:0 3px 3px 0}
+.verdict-card.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+.verdict-card.danger{border-left-color:var(--danger);background:var(--danger-soft)}
+.verdict-word{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.02em}
+.verdict-card.ok .verdict-word{color:var(--ok)}
+.verdict-card.danger .verdict-word{color:var(--danger)}
+.verdict-sub{font-size:13px;color:var(--ink-2);margin-top:4px}
+.hit{background:#fff;border:1px solid var(--rule);border-left:3px solid var(--danger);
+  border-radius:0 3px 3px 0;padding:13px 16px;margin-top:12px}
+.hit .rule{font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--danger)}
+.hit .match{font-family:var(--mono);font-size:12px;color:var(--ink);margin:6px 0}
+.hit .match b{background:var(--danger-soft);padding:1px 4px;border-radius:2px}
+.hit .why{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6}
+section.rules{border-top:1px solid var(--rule);margin-top:36px;padding-top:22px}
+h2{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:-.018em;margin:0 0 6px}
+.rules p{font-size:13px;color:var(--ink-2);max-width:660px}
+.rule-line{display:grid;grid-template-columns:250px 1fr;gap:14px;padding:9px 0;
+  border-bottom:1px dashed var(--rule-soft);font-size:12.5px;align-items:baseline}
+.rule-line .id{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--danger)}
+.rule-line .ev{color:var(--ink-2)}
+footer.page{border-top:1px solid var(--rule);padding:22px 0 40px;margin-top:40px;
+  color:var(--muted);font-size:12px;font-family:var(--mono);letter-spacing:.01em;line-height:1.8}
+footer.page a{color:var(--muted)}
+@media (max-width:700px){.row{grid-template-columns:1fr}.rule-line{grid-template-columns:1fr;gap:2px}}
+</style>
+</head>
+<body>
+<header class="page"><div class="wrap">
+  <p class="eyebrow">adgate &middot; live demo</p>
+  <h1>Try the claims gate</h1>
+  <p class="meta">the deterministic rule layer of a gated ad-creative pipeline &middot;
+    runs entirely in your browser, no model call, no cost &middot;
+    <a href="./run-report.html">full run report</a> &middot;
+    <a href="https://github.com/alhazjm/adgate">source on GitHub</a></p>
+</div></header>
+<main><div class="wrap">
+
+<p class="lede">Paste any ad hook and caption for a baby-care product. Ten do-not-say rules
+run first in the real pipeline &mdash; free, before any model is called &mdash; and each
+rule traces to citable evidence: the brand&rsquo;s own published substantiation footnotes,
+Singapore&rsquo;s Code of Advertising Practice, regulator precedent, and real customer
+complaints in public reviews. In the full pipeline, survivors then face an LLM brand-voice
+judge, and refused variants go to a bounded repair agent whose rewrites re-enter this same
+gate. This page runs the rule layer exactly as shipped.</p>
+
+<div class="row">
+  <div>
+    <label for="brand">Product line</label>
+    <select id="brand">
+      <option value="naturemade">Platinum Naturemade (incl. Overnite)</option>
+      <option value="airsoft">AirSoft Pants</option>
+      <option value="black-label">Black Label</option>
+      <option value="little-swimmers">Little Swimmers (swim pants)</option>
+      <option value="generic">Other / generic</option>
+    </select>
+  </div>
+  <div>
+    <label for="hook">Hook</label>
+    <input type="text" id="hook" placeholder="Scroll-stopping first line">
+  </div>
+</div>
+<label for="caption">Caption / script</label>
+<textarea id="caption" placeholder="Platform-ready caption, and any script beats"></textarea>
+
+<div class="btns">
+  <button class="primary" id="run">Run the gate</button>
+  <button class="ghost" id="ex-live">Example: the brand&rsquo;s own site copy</button>
+  <button class="ghost" id="ex-clean">Example: a clean variant</button>
+</div>
+
+<div id="result"></div>
+
+<section class="rules">
+  <h2>The ten rules, and the evidence behind them</h2>
+  <p>A claims gate without receipts is a toy. Every rule below exists because of something
+  citable: a substantiation footnote the brand itself publishes, a code clause, a regulator
+  decision, or what real customers wrote in public reviews.</p>
+  <div id="rulelist"></div>
+</section>
+
+</div></main>
+<footer class="page"><div class="wrap">
+  Hadi Al-Hazim &middot; built on public data only (brand sites, published codes and
+  decisions, marketplace reviews, forums) &middot; not affiliated with or endorsed by
+  Huggies, Kimberly-Clark or any brand named &middot; anything this page or the pipeline
+  generates is synthetic demo output, not a real advertisement
+</div></footer>
+
+<script>
+// Ported 1:1 from gate.py - same patterns, same reasons.
+const RULES = [
+  {id:"absolute-leak-blowout", lines:null,
+   rx:/leak[\s-]?proof|leak[\s-]?free|100\s*%\s*leak|never\s+leaks?\b|zero\s+(leaks?|blowouts?)\b|\bno\s+leaks?\b|won'?t\s+(ever\s+)?leak|blowout[\s-]?proof|\bno\s+blowouts?\b|never\s+.{0,12}blowout|guaranteed?\s+(leak|blowout|dry)/i,
+   why:"User experience is polarised in public reviews ('leaked all over even though states has side shield guards' vs 'almost never had a leak'). The brand's own SG copy stays hedged ('Superior leak protection'). SCAP 5.1: no misleading by exaggeration."},
+  {id:"natural-percent-inflation", lines:null,
+   rx:/100\s*%\s*(all[\s-])?natural|all[\s-]natural|purely?\s+natural|chemical[\s-]?free|toxin[\s-]?free|\bno\s+chemicals\b|nothing\s+artificial|made\s+(entirely\s+)?(of|from)\s+nature\b/i,
+   why:"The brand's own footnote narrows '100% Imported Natural Fibres' to a liner that 'contains 1% plant-based fiber; 100% imported from Europe'. SCAP Appendix L bars unqualified environmental claims; US class actions contest 'natural/plant-based' marketing."},
+  {id:"rash-hypoallergenic-guarantee", lines:null,
+   rx:/hypo[\s-]?allergenic|rash[\s-]?free\b|\bno\s+(more\s+)?rash(es)?\b|never\s+.{0,20}rash|stops?\s+rash|prevents?\s+(diaper\s+|nappy\s+)?rash|rash[\s-]?proof|dermatologist[\s-]?(approved|recommended)|cures?\s+(rash|eczema)|(safe|gentle)\s+for\s+all\s+skin/i,
+   why:"Contested by real users ('not as hypoallergenic as it states'; 2025 cluster: 'rash that almost looked like a chemical burn') and by live US class actions on 'hypoallergenic'. The only licensed form carries its published citation (Akin et al., 2001) and sits behind a claims-owner whitelist."},
+  {id:"hospital-endorsement", lines:null,
+   rx:/\bhospitals?\b|trusted\s+by\s+(doctors?|nurses?|p(a)?ediatricians?)|(doctors?|p(a)?ediatricians?|midwi(fe|ves))[\s-]?(recommended|approved|choice)/i,
+   why:"SCAP's medical appendix allows hospital/doctor references in ads only if fully substantiated (peer-review published), so ANY hospital mention is blocked pending substantiation - conservative by design. NAD 2018 made Kimberly-Clark drop 'more hospitals than ever are choosing Huggies' as 'based on assumptions, not facts'. The substantiated SG trust claim is the Euromonitor mums line."},
+  {id:"fit-superlative", lines:null,
+   rx:/#\s?1\s+(best[\s-]?)?fit(ting)?|best[\s-]?fitting\s+diaper\s+(ever|in\s+(sg|singapore)|on\s+the\s+market)|perfect\s+fit\b|fits\s+(every|all|any)\s+bab|true[\s-]to[\s-]size|never\s+(sags?|gaps?|slips?)/i,
+   why:"NAD Case #7248 (Feb 2024) recommended discontinuing '#1 Best Fitting Diaper' (evidence covered one line, not the market); public sizing reports directly contradict each other. Self-scoped phrasing ('our best-fitting') is the licensed form."},
+  {id:"competitor-superiority", lines:null,
+   rx:/absorbs?\s+(better|more)\s+than|(softest|driest|thinnest|most\s+absorbent|best)\s+(diaper|nappy|pants)\s+(ever|in\s+(sg|singapore)|on\s+the\s+market)|(beats?|outperforms?)\s+(pampers|mamypoko|merries|drypers|moony|rascal|every)|(than|vs\.?)\s+(pampers|mamypoko|merries|drypers|moony|rascal)|no\s+other\s+(diaper|nappy|brand)/i,
+   why:"SG parents rank rivals at or above Huggies on the exact axes ads would claim ('Mamy Poko absorbs better than Huggies'); Taiwan's FTC fined Kimberly-Clark NT$800,000 (2017) over a comparative demo 'not performed in accordance with normal use'. SCAP 9.3: comparisons must be clear, fair, same-basis."},
+  {id:"stat-inflation", lines:null,
+   rx:/99\.9\s*%|100\s*%\s*(dry(ness)?|protection|absorb)|\b\d{1,3}\s*%\s+of\s+(mums?|moms?|mothers?|parents?)|\b\d{1,2}\s+(in|out\s+of)\s+\d{1,2}\s+(mums?|moms?|mothers?|parents?)/i,
+   why:"The brand's own page says 'Locks Away 99.9%' in the bullet but '99%' in the feature grid ('internal testing'); survey-style claims echo the Taiwan FTC finding ('90% of mothers' rested on 21 people at a staged demo). SCAP 5.3: statistics must not imply greater validity than they have."},
+  {id:"unqualified-clinical-language", lines:null,
+   rx:/clinically\s+proven\s+(safe|to\s+protect|leak)|medical[\s-]?grade|scientifically\s+(proven|guaranteed)|lab[\s-]?certified\s+safe|therapeutic|heals?\s+(skin|rash)/i,
+   why:"SCAP 5.3 bars scientific jargon implying a basis claims do not possess; the brand's licensed clinical claims are narrow and cited (Dermatest seal; Akin et al. 2001), and its US zinc-liner claim is fenced 'Not for therapeutic use'."},
+  {id:"little-swimmers-absorbency", lines:["little-swimmers"],
+   rx:/absorb\w*|leak[\s-]?(proof|free)|\bno\s+leaks?\b|keeps?\s+.{0,20}dry|stays?\s+dry|\bdry\s+(bum|bottom|bab)|holds?\s+(pee|urine|liquid|everything)|12\s*h(ou)?rs?/i,
+   why:"Little Swimmers 'have almost no absorbency by design' (independent test, Feb 2026) - the product's job is containment during water play. Any dryness/absorbency framing misrepresents the product category. Line-scoped hard rule."},
+];
+const TWELVE = /\b(1[0-2])\s*[\s-]?h(ou)?rs?\b|\ball\s+night,?\s+every\s+night|dry\s+all\s+(the\s+)?(night|time)|through\s+the\s+night,?\s+(guaranteed|every)/i;
+const UP_TO = /up\s+to\s+(1[0-2])\s*[\s-]?h(ou)?rs?/i;
+const TWELVE_WHY = "Duration claim without the 'up to' qualifier - the brand's own footnote bases 'Up To 12 Hours***' on 'research on average urination rate of babies per 12hrs' (a usage model, not a wear test), and reviews contest unconditional duration ('barely last 5-8 hours' after a redesign). SCAP 5.1: omitting a material qualifier misleads.";
+
+function runGate(brand, hook, caption){
+  const text = hook + " " + caption;
+  const hits = [];
+  for (const r of RULES){
+    if (r.lines && !r.lines.includes(brand)) continue;
+    const m = r.rx.exec(text);
+    if (m) hits.push({id:r.id, match:m[0], why:r.why});
+  }
+  if (brand !== "little-swimmers"){
+    const m = TWELVE.exec(text);
+    if (m && !UP_TO.test(text)) hits.push({id:"duration-without-up-to", match:m[0], why:TWELVE_WHY});
+  }
+  return hits;
+}
+
+const $ = id => document.getElementById(id);
+function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML;}
+
+function render(){
+  const hook = $("hook").value || "", caption = $("caption").value || "";
+  if (!hook.trim() && !caption.trim()){
+    $("result").innerHTML = '<p class="note">Nothing to gate yet - paste a hook or caption.</p>';
+    return;
+  }
+  const hits = runGate($("brand").value, hook, caption);
+  let html;
+  if (hits.length){
+    html = '<div class="verdict-card danger"><div class="verdict-word">REFUSED</div>' +
+      '<div class="verdict-sub">' + hits.length + ' rule' + (hits.length>1?'s':'') +
+      ' fired. In the pipeline this refusal costs nothing (no model call) and the variant goes to the bounded repair agent, whose rewrite re-enters this same gate.</div></div>';
+    for (const h of hits){
+      html += '<div class="hit"><div class="rule">' + esc(h.id) + '</div>' +
+        '<div class="match">matched: <b>' + esc(h.match) + '</b></div>' +
+        '<div class="why">' + esc(h.why) + '</div></div>';
+    }
+  } else {
+    html = '<div class="verdict-card ok"><div class="verdict-word">RULES PASSED</div>' +
+      '<div class="verdict-sub">No do-not-say rule fired. In the full pipeline this variant would now face the LLM brand-voice judge (strong model, survivors only) - this page runs the free deterministic layer exactly as shipped.</div></div>';
+  }
+  $("result").innerHTML = html;
+}
+
+$("run").addEventListener("click", render);
+$("ex-live").addEventListener("click", () => {
+  $("brand").value = "naturemade";
+  $("hook").value = "Discover Why Huggies® Is the Trusted Choice for Moms and Hospitals";
+  $("caption").value = "";
+  render();
+});
+$("ex-clean").addEventListener("click", () => {
+  $("brand").value = "naturemade";
+  $("hook").value = "3am should be for cuddles, not changes.";
+  $("caption").value = "Up to 12 hours of overnight absorbency - designed so more nights end the way they started: everyone asleep.";
+  render();
+});
+
+$("rulelist").innerHTML = RULES.map(r =>
+  '<div class="rule-line"><span class="id">' + esc(r.id) +
+  (r.lines ? ' <span style="color:var(--muted)">(' + r.lines.join(", ") + ')</span>' : '') +
+  '</span><span class="ev">' + esc(r.why) + '</span></div>'
+).join("") +
+'<div class="rule-line"><span class="id">duration-without-up-to <span style="color:var(--muted)">(conditional)</span></span><span class="ev">' + esc(TWELVE_WHY) + '</span></div>';
+</script>
+</body>
+</html>
