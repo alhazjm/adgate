@@ -3,8 +3,9 @@ the latest pipeline run. This page is the async demo of the pipeline.
 
 Every figure is read from the real run outputs (eval_results.md, refusal_log.md,
 batch_sheet.csv, run_costs.json). Missing values render "not recorded" - never
-fabricated. Zero JavaScript; the only external reference is the Google Fonts
-link (full system fallbacks, so the page reads fine offline).
+fabricated. No external scripts (the only external reference is the Google Fonts
+link, with full system fallbacks); one tiny inline handler opens the collapsible
+sections when printing.
 """
 
 import csv
@@ -339,11 +340,56 @@ table.stages tr.tot td{border-bottom:none;border-top:1px solid var(--rule);
 footer.page{border-top:1px solid var(--rule);padding:22px 0 40px;
   color:var(--muted);font-size:12px;font-family:var(--mono);letter-spacing:.01em;line-height:1.8}
 footer.page a{color:var(--muted)}
+/* production-flow diagram */
+.flow{max-width:760px;margin:6px auto 0}
+.flow-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.node{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:14px 16px;
+  text-align:center;box-shadow:0 4px 16px rgba(30,22,86,.05);position:relative}
+.node .n-title{font-family:var(--display);font-weight:600;font-size:14px;color:var(--ink)}
+.node .n-sub{font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:3px}
+.node.live{background:var(--ink);border-color:var(--ink)}
+.node.live .n-title{color:#fff}
+.node.live .n-sub{color:#B7B4CB}
+.node.human{background:var(--ok-soft);border:1.5px solid var(--ok)}
+.node.dashed{border-style:dashed;background:transparent;box-shadow:none}
+.live-pill{position:absolute;top:-9px;right:14px;font-family:var(--mono);font-size:9px;
+  font-weight:700;letter-spacing:.1em;background:var(--accent);color:#fff;
+  padding:3px 10px;border-radius:999px}
+.chips{display:flex;gap:6px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 9px;border-radius:999px}
+.chip.ai{background:var(--warn-soft);color:var(--warn)}
+.chip.rules{background:var(--bg-2);color:var(--ink-2)}
+.chip.hmn{background:var(--ok-soft);color:var(--ok)}
+.chip.na{background:transparent;color:var(--muted);border:1px dashed var(--muted-2)}
+.node.live .chip.ai{background:rgba(255,121,0,.28);color:#FFC08A}
+.node.live .chip.rules{background:rgba(255,255,255,.14);color:#CFCBE8}
+.node.live .chip.hmn{background:rgba(14,122,78,.4);color:#9FE0C0}
+.flow-arrow{text-align:center;color:var(--muted-2);font-size:16px;line-height:1;padding:7px 0}
+.flow-note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:10px}
+.legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:20px;
+  font-size:11.5px;color:var(--muted);align-items:center}
+.legend .sw{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+/* collapsible sections */
+details.fold{margin-top:16px}
+details.fold summary{display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+  font-family:var(--display);font-weight:600;font-size:13.5px;color:var(--ink);
+  background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:11px 24px;
+  list-style:none;user-select:none}
+details.fold summary::-webkit-details-marker{display:none}
+details.fold summary:hover{border-color:var(--accent);color:var(--accent)}
+details.fold summary .chev{transition:transform .2s ease;font-size:11px}
+details.fold[open] summary .chev{transform:rotate(180deg)}
+details.fold summary .when-open{display:none}
+details.fold[open] summary .when-open{display:inline}
+details.fold[open] summary .when-closed{display:none}
+details.fold > .fold-body{margin-top:16px}
 @media (max-width:940px){
   .ev-row{grid-template-columns:140px 1fr;grid-auto-rows:auto}
   .ev-row .ev-rule{grid-column:2}
   .rf-line{grid-template-columns:120px 1fr}
   .hero-num .n{font-size:64px}
+  .flow-row{grid-template-columns:1fr}
 }
 @media print{
   body{background:#fff;background-image:none;color:#000;font-size:8pt;line-height:1.35;
@@ -364,6 +410,7 @@ footer.page a{color:var(--muted)}
   .ev-rule{font-size:6.5pt}
   .ev-label{font-size:7.5pt}
   .ev-detail{font-size:6pt}
+  details.fold summary{display:none}
   .rf-list{column-count:2;column-gap:14px}
   .rf{break-inside:avoid;page-break-inside:avoid;padding:4px 8px;margin-bottom:4px}
   .rf-head{margin-bottom:1px}
@@ -421,6 +468,24 @@ def build():
                     f"{rep.get('human_queue', NR)} to human queue · "
                     f"repair spend {fmt_usd(rep.get('repair_cost_usd'), 4)}")
                    if rep else NR)
+
+    def fold(show_label, hide_label, inner):
+        return (f'<details class="fold"><summary>'
+                f'<span class="when-closed">{show_label}</span>'
+                f'<span class="when-open">{hide_label}</span>'
+                f'<span class="chev">&#9662;</span></summary>'
+                f'<div class="fold-body">{inner}</div></details>')
+
+    evals_block = (fold(f"Show all {len(evals)} checks", "Hide the checks",
+                        eval_rows_html(evals))
+                   if evals else eval_rows_html(evals))
+    repair_first = refusal_html(repaired_entries[:1]) if repaired_entries else ""
+    repair_rest = (fold(f"Show the other {len(repaired_entries) - 1} salvages",
+                        "Hide the salvages", refusal_html(repaired_entries[1:]))
+                   if len(repaired_entries) > 1 else "")
+    batch_block = (fold(f"Show all {len(batch)} variants", "Hide the batch sheet",
+                        batch_html(batch))
+                   if batch else batch_html(batch))
 
     page = f"""<!DOCTYPE html>
 <html lang="en">
@@ -481,6 +546,81 @@ def build():
   directly in the browser, with no model call.</p>
 </section>
 
+<section id="production">
+  <div class="sec-head"><h2>How this runs in production</h2>
+    <span class="right">dark cards run in this demo &middot; AI marked per step</span></div>
+  <p class="sec-note">The dark cards are what the shipped demo already does; the light
+  cards are the pipeline around it on a real engagement. Every card is tagged with who
+  does the work: a model, deterministic rules, or a person.</p>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="node"><div class="n-title">Campaign brief</div>
+        <div class="n-sub">from account / strategy</div>
+        <div class="chips"><span class="chip hmn">human</span></div></div>
+      <div class="node"><div class="n-title">Claims list &amp; brand book</div>
+        <div class="n-sub">Legal + brand team</div>
+        <div class="chips"><span class="chip hmn">human</span></div></div>
+      <div class="node"><div class="n-title">Complaints &middot; CS &middot; social</div>
+        <div class="n-sub">what customers contest</div>
+        <div class="chips"><span class="chip rules">data feed</span></div></div>
+    </div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="node live"><span class="live-pill">LIVE</span>
+      <div class="n-title">Brand rule set</div>
+      <div class="n-sub">versioned do-not-say rules. This demo&rsquo;s ten were built from
+        public evidence; on the job, from the claims list. AI may draft candidate rules,
+        a person approves (roadmap)</div>
+      <div class="chips"><span class="chip rules">rules &middot; no ai</span>
+        <span class="chip hmn">human approves</span></div></div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="node live"><span class="live-pill">LIVE</span>
+      <div class="n-title">Asset generation</div>
+      <div class="n-sub">briefs &rarr; variants at scale</div>
+      <div class="chips"><span class="chip ai">ai &middot; cheap model</span></div></div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="node live"><span class="live-pill">LIVE</span>
+      <div class="n-title">Claims gate</div>
+      <div class="n-sub">rules run first &middot; refusals are free and instant</div>
+      <div class="chips"><span class="chip rules">rules &middot; no ai</span></div></div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="node live"><span class="live-pill">LIVE</span>
+      <div class="n-title">Voice judge</div>
+      <div class="n-sub">scores rule-survivors only, so the strong model never reads
+        what the rules already refused</div>
+      <div class="chips"><span class="chip ai">ai &middot; strong model</span></div></div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="node live"><span class="live-pill">LIVE</span>
+      <div class="n-title">Repair agent</div>
+      <div class="n-sub">rewrites refusals and resubmits to the same gate &middot; two
+        attempts, spend cap, no verdict authority</div>
+      <div class="chips"><span class="chip ai">ai &middot; bounded agent</span></div></div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="node human">
+      <div class="n-title">Human review</div>
+      <div class="n-sub">approves, edits, or kills &mdash; nothing publishes without a
+        person. This report is the run&rsquo;s version of that queue</div>
+      <div class="chips"><span class="chip hmn">human decides</span></div></div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="node"><div class="n-title">Publish / traffic</div>
+      <div class="n-sub">channel delivery via existing tooling</div>
+      <div class="chips"><span class="chip rules">no ai</span></div></div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="node dashed"><div class="n-title">Performance readback</div>
+      <div class="n-sub">winners and losers re-enter the evidence base and update the
+        rule set</div>
+      <div class="chips"><span class="chip na">designed &middot; not built</span></div></div>
+    <p class="flow-note">the readback loops to the top: new evidence &rarr; rule updates
+      &rarr; the next run generates against a smarter gate</p>
+  </div>
+  <div class="legend">
+    <span><span class="sw" style="background:var(--ink)"></span>live in this demo</span>
+    <span><span class="sw" style="background:#fff;border:1px solid var(--rule)"></span>production pipeline around it</span>
+    <span><span class="chip ai">ai</span>&nbsp;model involved</span>
+    <span><span class="chip rules">rules</span>&nbsp;deterministic, free</span>
+    <span><span class="chip hmn">human</span>&nbsp;a person decides</span>
+  </div>
+</section>
+
 <section id="evals">
   <div class="sec-head"><h2>Eval results &mdash; the gate earns its numbers</h2>
     <span class="right">refused correctly {esc(refused)} &middot; passed correctly {esc(passed)}
@@ -491,7 +631,7 @@ def build():
   Repair fixtures run the bounded agent end-to-end &mdash; a salvageable refusal must come
   back PASS, and an unshippable claim must never sneak past as a paraphrase (the evasion
   probe checks wordings the gate&rsquo;s own regex does not cover).</p>
-  {eval_rows_html(evals)}
+  {evals_block}
 </section>
 
 <section id="repair">
@@ -503,7 +643,8 @@ def build():
   authority &mdash; every rewrite re-enters the same gate, and whatever is still failing
   lands in the human queue with its full history. Each card below is one salvage from
   this run: the copy as generated, the rule it broke, and the rewrite that passed.</p>
-  {refusal_html(repaired_entries)}
+  {repair_first}
+  {repair_rest}
 </section>
 
 <section id="refusals">
@@ -522,7 +663,7 @@ def build():
   &rarr; variants on the cheap model tier), then gated and, where needed, repaired;
   verdicts are final, post-repair. All of it is demo output; none of it is a real
   advertisement.</p>
-  {batch_html(batch)}
+  {batch_block}
 </section>
 
 <section id="economics">
@@ -543,6 +684,12 @@ def build():
   step; this page is its per-run output &middot; built on public voice-of-customer data only
   &middot; not affiliated with or endorsed by any brand named
 </div></footer>
+<script>
+/* no external scripts; this only opens the collapsed sections when printing */
+window.addEventListener("beforeprint", function () {{
+  document.querySelectorAll("details.fold").forEach(function (d) {{ d.open = true; }});
+}});
+</script>
 </body>
 </html>"""
 
