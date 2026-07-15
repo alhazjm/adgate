@@ -252,7 +252,10 @@ header.page{position:relative;padding:34px 0 48px;border-bottom:none;
     radial-gradient(90% 160% at 92% 85%, rgba(240,4,127,.30), transparent 65%),
     linear-gradient(135deg,#FFE9F5 0%,#FFF3E4 100%)}
 header.page .wrap{background:#fff;border-radius:28px;
-  box-shadow:0 16px 48px rgba(30,22,86,.14);padding:30px 40px 26px}
+  box-shadow:0 16px 48px rgba(30,22,86,.14);padding:30px 40px 26px;
+  display:flex;flex-direction:column}
+@media (min-width:941px){header.page .wrap{min-height:264px}
+  .cta-row{margin-top:auto;padding-top:18px}}
 .eyebrow{font-family:var(--display);font-size:11px;font-weight:600;text-transform:uppercase;
   letter-spacing:.18em;color:var(--accent);margin:0 0 10px}
 h1{font-family:var(--display);font-size:38px;line-height:1.08;letter-spacing:-.02em;
