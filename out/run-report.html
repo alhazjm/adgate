@@ -260,20 +260,9 @@ footer.page a{color:var(--muted)}
   rule that fired and the review evidence behind it, rewrites, and resubmits. Bounds:
   2 attempts per variant, a per-run spend cap, brand and angle pinned, and no verdict
   authority &mdash; every rewrite re-enters the same gate, and whatever is still failing
-  lands in the human queue with its full history. Repaired entries below show the
-  before/after.</p>
-</section>
-
-<section id="refusals">
-  <div class="sec-head"><h2>Refusal log &mdash; what the gate said no to</h2>
-    <span class="right">deterministic rules run first &middot; refusals cost nothing</span></div>
-  <p class="sec-note">Every refusal names its rule and the review evidence behind it.
-  Amber entries passed the claims rules but were flagged off-voice by the judge.</p>
-  <div class="rf-list"><article class="rf danger live"><div class="rf-head"><span class="v danger">REFUSED</span><span class="rf-title">[LIVE-COPY AUDIT] Huggies SG&#x27;s own site copy (huggies.com.sg/about-us, captured 15 Jul 2026)</span></div><div class="rf-line q"><span class="k">live caption</span><span>&quot;Discover Why Huggies® Is the Trusted Choice for Moms and Hospitals&quot;</span></div>
-<div class="rf-line rule"><span class="k">rule</span><span><code>hospital-endorsement</code></span></div>
-<div class="rf-line r"><span class="k">reason</span><span>matched &#x27;Hospitals&#x27; - Hospital/professional endorsement - SCAP medical appendix 4.3 allows hospital/doctor references in ads only if fully substantiated (peer-review published), so ANY hospital mention is blocked pending substantiation (conservative by design); NAD 2018 made Kimberly-Clark drop &#x27;more hospitals than ever are choosing Huggies&#x27; as &#x27;based on assumptions, not facts&#x27;. The substantiated SG trust claim is the Euromonitor mums line, not hospitals.</span></div>
-<div class="rf-line r"><span class="k">suggested rewrite</span><span>Discover why Huggies® is the diaper brand mums trust most* (*Euromonitor International Limited; Tissue and Hygiene 2023ed, retail value RSP, 2022 data - the substantiation Huggies Singapore already publishes elsewhere). Keeps the trust story, drops the unfootnoted hospital reference that SCAP&#x27;s medical appendix requires to be fully substantiated and that NAD made Kimberly-Clark abandon in 2018.</span></div></article>
-<article class="rf ok"><div class="rf-head"><span class="v ok">REPAIRED</span><span class="rf-title">V002 (newborn-default, naturemade) - REPAIRED -&gt; PASS after 1 attempt(s)</span></div><div class="rf-line r"><span class="k">original hook</span><span>What do thousands of Singapore families already know?</span></div>
+  lands in the human queue with its full history. Each card below is one salvage from
+  this run: the copy as generated, the rule it broke, and the rewrite that passed.</p>
+  <div class="rf-list"><article class="rf ok"><div class="rf-head"><span class="v ok">REPAIRED</span><span class="rf-title">V002 (newborn-default, naturemade) - REPAIRED -&gt; PASS after 1 attempt(s)</span></div><div class="rf-line r"><span class="k">original hook</span><span>What do thousands of Singapore families already know?</span></div>
 <div class="rf-line r"><span class="k">original caption</span><span>The comfort of a hug, every single day. Huggies Platinum Naturemade—the gentle default that keeps babies sleeping soundly. 💕</span></div>
 <div class="rf-line r"><span class="k">rule broken</span><span>hospital-endorsement</span></div>
 <div class="rf-line r"><span class="k">repaired hook</span><span>What do thousands of Singapore mums already know?</span></div>
@@ -348,6 +337,18 @@ footer.page a{color:var(--muted)}
 <div class="rf-line r"><span class="k">rule broken</span><span>absolute-leak-blowout; hospital-endorsement</span></div>
 <div class="rf-line r"><span class="k">repaired hook</span><span>Three years. One diaper. That&#x27;s the comfort that keeps.</span></div>
 <div class="rf-line r"><span class="k">repaired caption</span><span>When mums find their rhythm, they know it. Huggies Platinum Naturemade&#x27;s leak protection and gentle nature-inspired design give baby the comfort of a hug—day and night. 🌿💕</span></div></article></div>
+</section>
+
+<section id="refusals">
+  <div class="sec-head"><h2>Refusal log &mdash; what the gate said no to</h2>
+    <span class="right">deterministic rules run first &middot; refusals cost nothing</span></div>
+  <p class="sec-note">Every refusal names its rule and the evidence behind it. Entries
+  the repair agent salvaged are shown in the Repair section above; what remains here is
+  the live-copy audit and anything that stayed refused or off-voice.</p>
+  <div class="rf-list"><article class="rf danger live"><div class="rf-head"><span class="v danger">REFUSED</span><span class="rf-title">[LIVE-COPY AUDIT] Huggies SG&#x27;s own site copy (huggies.com.sg/about-us, captured 15 Jul 2026)</span></div><div class="rf-line q"><span class="k">live caption</span><span>&quot;Discover Why Huggies® Is the Trusted Choice for Moms and Hospitals&quot;</span></div>
+<div class="rf-line rule"><span class="k">rule</span><span><code>hospital-endorsement</code></span></div>
+<div class="rf-line r"><span class="k">reason</span><span>matched &#x27;Hospitals&#x27; - Hospital/professional endorsement - SCAP medical appendix 4.3 allows hospital/doctor references in ads only if fully substantiated (peer-review published), so ANY hospital mention is blocked pending substantiation (conservative by design); NAD 2018 made Kimberly-Clark drop &#x27;more hospitals than ever are choosing Huggies&#x27; as &#x27;based on assumptions, not facts&#x27;. The substantiated SG trust claim is the Euromonitor mums line, not hospitals.</span></div>
+<div class="rf-line r"><span class="k">suggested rewrite</span><span>Discover why Huggies® is the diaper brand mums trust most* (*Euromonitor International Limited; Tissue and Hygiene 2023ed, retail value RSP, 2022 data - the substantiation Huggies Singapore already publishes elsewhere). Keeps the trust story, drops the unfootnoted hospital reference that SCAP&#x27;s medical appendix requires to be fully substantiated and that NAD made Kimberly-Clark abandon in 2018.</span></div></article></div>
 </section>
 
 <section id="batch">

@@ -397,7 +397,9 @@ def build():
     costs = load_costs()
     provider, gen_model, judge_model = load_models()
     evals, refused, passed, repaired = load_evals()
-    refusals = load_refusals()
+    all_refusals = load_refusals()
+    repaired_entries = [e for e in all_refusals if e["verdict"] == "REPAIRED"]
+    refusals = [e for e in all_refusals if e["verdict"] != "REPAIRED"]
     batch = load_batch()
 
     run_date = costs.get("_run_date", NR)
@@ -499,15 +501,17 @@ def build():
   rule that fired and the review evidence behind it, rewrites, and resubmits. Bounds:
   2 attempts per variant, a per-run spend cap, brand and angle pinned, and no verdict
   authority &mdash; every rewrite re-enters the same gate, and whatever is still failing
-  lands in the human queue with its full history. Repaired entries below show the
-  before/after.</p>
+  lands in the human queue with its full history. Each card below is one salvage from
+  this run: the copy as generated, the rule it broke, and the rewrite that passed.</p>
+  {refusal_html(repaired_entries)}
 </section>
 
 <section id="refusals">
   <div class="sec-head"><h2>Refusal log &mdash; what the gate said no to</h2>
     <span class="right">deterministic rules run first &middot; refusals cost nothing</span></div>
-  <p class="sec-note">Every refusal names its rule and the review evidence behind it.
-  Amber entries passed the claims rules but were flagged off-voice by the judge.</p>
+  <p class="sec-note">Every refusal names its rule and the evidence behind it. Entries
+  the repair agent salvaged are shown in the Repair section above; what remains here is
+  the live-copy audit and anything that stayed refused or off-voice.</p>
   {refusal_html(refusals)}
 </section>
 
