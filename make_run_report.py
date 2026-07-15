@@ -261,8 +261,10 @@ section:last-of-type{border-bottom:none}
 .sec-head .right{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
   color:var(--muted);text-transform:uppercase;text-align:right}
 .sec-note{font-size:13.5px;color:var(--ink-2);max-width:720px;margin:0 0 20px}
-.v{font-family:var(--mono);font-weight:700;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
-.v.ok{color:var(--ok)}.v.danger{color:var(--danger)}.v.warn{color:var(--warn)}.v.muted{color:var(--muted)}
+.v{font-family:var(--mono);font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 11px;border-radius:999px;background:var(--bg-2);white-space:nowrap;display:inline-block}
+.v.ok{color:var(--ok);background:var(--ok-soft)}.v.danger{color:var(--danger);background:var(--danger-soft)}
+.v.warn{color:var(--warn);background:var(--warn-soft)}.v.muted{color:var(--muted)}
 .nr{font-family:var(--mono);font-size:12px;color:var(--muted-2);font-style:italic}
 /* eval rows */
 .ev-row{display:grid;grid-template-columns:170px 190px 1fr;gap:18px;
@@ -272,12 +274,10 @@ section:last-of-type{border-bottom:none}
 .ev-label em{font-style:italic;color:var(--ink)}
 .ev-detail{display:block;font-size:12px;color:var(--muted);margin-top:2px;font-style:normal}
 /* refusal log */
-.rf{background:#fff;border:1px solid var(--rule);border-left:4px solid var(--danger);
-  padding:14px 18px;margin:0 0 14px;border-radius:14px;
+.rf{background:#fff;border:1px solid var(--rule);
+  padding:14px 18px;margin:0 0 14px;border-radius:16px;
   box-shadow:0 4px 16px rgba(30,22,86,.05)}
-.rf.warn{border-left-color:var(--warn)}
-.rf.ok{border-left-color:var(--ok)}
-.rf.live{background:var(--danger-soft)}
+.rf.live{background:var(--danger-soft);border-color:transparent}
 .rf-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
 .rf-title{font-family:var(--display);font-weight:700;font-size:14.5px;letter-spacing:-.01em}
 .rf-line{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:3px 0;
@@ -295,12 +295,6 @@ table.batch thead th, table.stages thead th{font-family:var(--mono);font-size:10
   text-align:left;padding:8px 14px 8px 0;border-bottom:2px solid var(--ink)}
 table.batch tbody tr{border-bottom:1px dashed var(--rule)}
 table.batch tbody td{padding:10px 14px 10px 0;vertical-align:top;line-height:1.45}
-table.batch tbody tr td:first-child{padding-left:10px;position:relative}
-table.batch tbody tr td:first-child::before{content:"";position:absolute;left:0;top:8px;
-  bottom:8px;width:3px;border-radius:1px;background:var(--muted-2)}
-table.batch tbody tr.ok td:first-child::before{background:var(--ok)}
-table.batch tbody tr.danger td:first-child::before{background:var(--danger)}
-table.batch tbody tr.warn td:first-child::before{background:var(--warn)}
 td.mono{font-family:var(--mono);font-size:11px;white-space:nowrap;color:var(--ink-2)}
 td.vtxt{max-width:380px;color:var(--ink-2)}
 td.vtxt strong{color:var(--ink);font-weight:600;display:block}
@@ -360,7 +354,6 @@ footer.page a{color:var(--muted)}
   table.batch tbody td{padding:1.5px 6px 1.5px 0;line-height:1.25}
   td.vtxt .cap,td.reason .rsn{display:-webkit-box;-webkit-line-clamp:2;
     -webkit-box-orient:vertical;overflow:hidden}
-  table.batch tbody tr td:first-child{padding-left:5px}
   td.mono{font-size:5.5pt}
   td.vcell .vs{font-size:5.5pt}
   td.vtxt,td.reason{max-width:none}

@@ -24,11 +24,11 @@ body{margin:0;background-color:var(--bg);
   background-size:22px 22px;
   color:var(--ink);font-family:var(--sans);
   font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
-a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--muted-2);text-underline-offset:3px}
 a:hover{color:var(--accent);text-decoration-color:var(--accent)}
-code{font-family:var(--mono);font-size:.86em;background:var(--bg-2);padding:1px 5px;border-radius:2px}
+code{font-family:var(--mono);font-size:.85em;background:var(--bg-2);padding:1px 5px;border-radius:4px}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
-header.page{position:relative;padding:34px 0 48px;border-bottom:none;
+header.page{position:relative;padding:34px 0 48px;
   background:
     radial-gradient(60% 130% at 6% 12%, rgba(255,199,0,.55), transparent 58%),
     radial-gradient(70% 150% at 30% 45%, rgba(255,0,153,.40), transparent 62%),
@@ -42,13 +42,32 @@ header.page .wrap{background:#fff;border-radius:28px;
 h1{font-family:var(--display);font-size:36px;line-height:1.08;letter-spacing:-.02em;font-weight:700;margin:0}
 .meta{margin:12px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.02em;line-height:1.7}
 main{padding:26px 0 40px}
-.lede{font-size:14.5px;color:var(--ink-2);max-width:660px;margin:0 0 22px}
-label{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;
+.lede{font-size:14.5px;color:var(--ink-2);max-width:680px;margin:0 0 26px}
+h2{font-family:var(--display);font-size:19px;font-weight:600;letter-spacing:-.012em;margin:0 0 6px}
+.sec-sub{font-size:13px;color:var(--muted);margin:0 0 16px;max-width:640px}
+/* sample cards */
+.samples{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 34px}
+.sample{background:#fff;border:1px solid var(--rule);border-radius:18px;padding:16px 18px 14px;
+  display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 18px rgba(30,22,86,.05)}
+.sample:hover{border-color:var(--muted-2)}
+.sample .s-label{font-family:var(--display);font-size:10px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--accent)}
+.sample .s-hook{font-family:var(--display);font-weight:600;font-size:14.5px;line-height:1.4;color:var(--ink)}
+.sample .s-note{font-size:12px;color:var(--muted);line-height:1.5;flex:1}
+.sample .s-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:2px}
+.tag{font-family:var(--display);font-size:10.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;padding:4px 12px;border-radius:999px}
+.tag.refused{background:var(--danger-soft);color:var(--danger)}
+.tag.passes{background:var(--ok-soft);color:var(--ok)}
+.sample button{padding:8px 18px;font-size:12px}
+/* inputs */
+label{display:block;font-family:var(--display);font-size:10.5px;font-weight:600;
   text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin:16px 0 6px}
 select,input[type=text],textarea{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);
   background:#fff;border:1px solid var(--rule);border-radius:12px;padding:11px 14px;outline:none}
 select:focus,input:focus,textarea:focus{border-color:var(--accent)}
 textarea{min-height:96px;resize:vertical}
+::placeholder{color:var(--muted-2)}
 .row{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:end}
 .btns{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 0}
 button{font-family:var(--display);font-size:13.5px;font-weight:600;letter-spacing:.01em;
@@ -57,34 +76,35 @@ button.primary{background:var(--ink);color:#fff}
 button.primary:hover{background:var(--accent);border-color:var(--accent)}
 button.ghost{background:#fff;color:var(--ink)}
 button.ghost:hover{border-color:var(--accent);color:var(--accent)}
+/* results */
 #result{margin-top:28px}
-.verdict-card{border-left:5px solid var(--muted);background:var(--bg-2);padding:18px 22px;border-radius:16px}
-.verdict-card.ok{border-left-color:var(--ok);background:var(--ok-soft)}
-.verdict-card.danger{border-left-color:var(--danger);background:var(--danger-soft)}
+.verdict-card{background:var(--bg-2);padding:20px 24px;border-radius:18px}
+.verdict-card.ok{background:var(--ok-soft)}
+.verdict-card.danger{background:var(--danger-soft)}
 .verdict-word{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:-.01em}
 .verdict-card.ok .verdict-word{color:var(--ok)}
 .verdict-card.danger .verdict-word{color:var(--danger)}
 .verdict-sub{font-size:13px;color:var(--ink-2);margin-top:4px}
-.hit{background:#fff;border:1px solid var(--rule);border-left:4px solid var(--danger);
-  border-radius:14px;padding:13px 18px;margin-top:12px;
-  box-shadow:0 4px 16px rgba(30,22,86,.05)}
-.hit .rule{font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--danger)}
-.hit .match{font-family:var(--mono);font-size:12px;color:var(--ink);margin:6px 0}
-.hit .match b{background:var(--danger-soft);padding:1px 4px;border-radius:2px}
-.hit .why{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.hit{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:14px 18px;
+  margin-top:12px;box-shadow:0 4px 16px rgba(30,22,86,.05)}
+.hit .rule{display:inline-block;font-family:var(--mono);font-weight:700;font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--danger);
+  background:var(--danger-soft);padding:3px 12px;border-radius:999px}
+.hit .match{font-family:var(--mono);font-size:12px;color:var(--ink);margin:8px 0 6px}
+.hit .match b{background:var(--danger-soft);padding:1px 5px;border-radius:4px}
+.hit .why{font-size:12.5px;color:var(--ink-2);line-height:1.55}
 .note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6}
 section.rules{border-top:1px solid var(--rule);margin-top:36px;padding-top:22px}
-h2{font-family:var(--display);font-size:19px;font-weight:600;letter-spacing:-.012em;margin:0 0 6px}
 .rules p{font-size:13px;color:var(--ink-2);max-width:660px}
 .rule-line{display:grid;grid-template-columns:250px 1fr;gap:14px;padding:9px 0;
   border-bottom:1px dashed var(--rule-soft);font-size:12.5px;align-items:baseline}
-.rule-line .id{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--danger)}
+.rule-line .id{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent)}
 .rule-line .ev{color:var(--ink-2)}
 footer.page{border-top:1px solid var(--rule);padding:22px 0 40px;margin-top:40px;
   color:var(--muted);font-size:12px;font-family:var(--mono);letter-spacing:.01em;line-height:1.8}
 footer.page a{color:var(--muted)}
-@media (max-width:700px){.row{grid-template-columns:1fr}.rule-line{grid-template-columns:1fr;gap:2px}}
+@media (max-width:700px){.row{grid-template-columns:1fr}.rule-line{grid-template-columns:1fr;gap:2px}
+  .samples{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -98,14 +118,23 @@ footer.page a{color:var(--muted)}
 </div></header>
 <main><div class="wrap">
 
-<p class="lede">Paste any ad hook and caption for a baby-care product. Ten do-not-say rules
-run first in the real pipeline &mdash; free, before any model is called &mdash; and each
-rule traces to citable evidence: the brand&rsquo;s own published substantiation footnotes,
-Singapore&rsquo;s Code of Advertising Practice, regulator precedent, and real customer
-complaints in public reviews. In the full pipeline, survivors then face an LLM brand-voice
-judge, and refused variants go to a bounded repair agent whose rewrites re-enter this same
-gate. This page runs the rule layer exactly as shipped.</p>
+<p class="lede">This is the gate that sits inside a generate&#8209;and&#8209;repair ad pipeline for a
+baby-care brand's Singapore market. Ten do-not-say rules run before any model is called
+&mdash; each traces to the brand&rsquo;s own substantiation footnotes, Singapore&rsquo;s
+advertising code, regulator precedent, or real customer complaints. Load a sample below
+to see it fire, or write your own line and test it.</p>
 
+<h2>Start with a sample</h2>
+<p class="sec-sub">The first card is the brand&rsquo;s own published copy. The middle two are
+real outputs from the shipped pipeline run: the same variant before and after the bounded
+repair agent (its rewrite had to re-enter this exact gate). Every card loads into the
+fields below and runs instantly.</p>
+<div class="samples" id="samples"></div>
+
+<h2>Or write your own</h2>
+<p class="sec-sub">A <strong>hook</strong> is the ad&rsquo;s scroll-stopping first line; the
+<strong>caption</strong> is the body copy (and any video-script beats). Pick the product
+line the ad is for &mdash; two rules are line-specific.</p>
 <div class="row">
   <div>
     <label for="brand">Product line</label>
@@ -119,16 +148,14 @@ gate. This page runs the rule layer exactly as shipped.</p>
   </div>
   <div>
     <label for="hook">Hook</label>
-    <input type="text" id="hook" placeholder="Scroll-stopping first line">
+    <input type="text" id="hook" placeholder='e.g. "Sleep easy tonight - zero leaks, guaranteed"'>
   </div>
 </div>
 <label for="caption">Caption / script</label>
-<textarea id="caption" placeholder="Platform-ready caption, and any script beats"></textarea>
+<textarea id="caption" placeholder='e.g. "100% leak-proof protection, all night long." (script beats optional: beat 1 | beat 2 | beat 3)'></textarea>
 
 <div class="btns">
   <button class="primary" id="run">Run the gate</button>
-  <button class="ghost" id="ex-live">Example: the brand&rsquo;s own site copy</button>
-  <button class="ghost" id="ex-clean">Example: a clean variant</button>
 </div>
 
 <div id="result"></div>
@@ -178,11 +205,36 @@ const RULES = [
    why:"SCAP 5.3 bars scientific jargon implying a basis claims do not possess; the brand's licensed clinical claims are narrow and cited (Dermatest seal; Akin et al. 2001), and its US zinc-liner claim is fenced 'Not for therapeutic use'."},
   {id:"little-swimmers-absorbency", lines:["little-swimmers"],
    rx:/absorb\w*|leak[\s-]?(proof|free)|\bno\s+leaks?\b|keeps?\s+.{0,20}dry|stays?\s+dry|\bdry\s+(bum|bottom|bab)|holds?\s+(pee|urine|liquid|everything)|12\s*h(ou)?rs?/i,
-   why:"Little Swimmers 'have almost no absorbency by design' (independent test, Feb 2026) - the product's job is containment during water play. Any dryness/absorbency framing misrepresents the product category. Line-scoped hard rule."},
+   why:"Little Swimmers 'have almost no absorbency by design' (independent test, Feb 2026) - the product's job is containment during water play. Any dryness/absorbency framing for this line misrepresents the product category. Line-scoped hard rule."},
 ];
 const TWELVE = /\b(1[0-2])\s*[\s-]?h(ou)?rs?\b|\ball\s+night,?\s+every\s+night|dry\s+all\s+(the\s+)?(night|time)|through\s+the\s+night,?\s+(guaranteed|every)/i;
 const UP_TO = /up\s+to\s+(1[0-2])\s*[\s-]?h(ou)?rs?/i;
 const TWELVE_WHY = "Duration claim without the 'up to' qualifier - the brand's own footnote bases 'Up To 12 Hours***' on 'research on average urination rate of babies per 12hrs' (a usage model, not a wear test), and reviews contest unconditional duration ('barely last 5-8 hours' after a redesign). SCAP 5.1: omitting a material qualifier misleads.";
+
+// Loadable samples. #1 is the brand's own published copy; #2 and #3 are variant
+// V008 from the shipped run, verbatim, before and after the repair agent.
+const SAMPLES = [
+  {label:"The brand's own site copy", expect:"refused",
+   note:"huggies.com.sg about-us headline + homepage brand pillars, captured 15 Jul 2026. Their own copy carries an unfootnoted hospital reference.",
+   brand:"naturemade",
+   hook:"Discover Why Huggies® Is the Trusted Choice for Moms and Hospitals",
+   caption:"Free of harsh ingredients. Soft and gentle for baby. Superior leak protection."},
+  {label:"Pipeline output — as generated", expect:"refused",
+   note:"Variant V008 from the shipped run, exactly as the generator wrote it. The 12-hour claim is missing its 'up to' qualifier.",
+   brand:"naturemade",
+   hook:"Heavy wetter? 12-hour protection without the wake-ups.",
+   caption:"Real mum, real talk: 'I'm using Huggies Naturemade and it lasts 12 hours for my little one!' No more midnight sheet changes. We got you, baby. 💕🌿"},
+  {label:"Pipeline output — after repair", expect:"passes",
+   note:"The same V008 after the bounded repair agent's rewrite. This exact text re-entered the gate in the run and passed.",
+   brand:"naturemade",
+   hook:"Heavy wetter? Built for longer comfort.",
+   caption:"Real mum, real talk: 'I switched to Huggies Naturemade and my little one stays dry and comfortable through the night.' We got you, baby. 💕🌿"},
+  {label:"A clean variant — licensed form", expect:"passes",
+   note:"The 'up to 12 hours' phrasing is the form the brand's own substantiation footnote supports.",
+   brand:"naturemade",
+   hook:"3am should be for cuddles, not changes.",
+   caption:"Up to 12 hours of overnight absorbency - designed so more nights end the way they started: everyone asleep."},
+];
 
 function runGate(brand, hook, caption){
   const text = hook + " " + caption;
@@ -205,7 +257,7 @@ function esc(s){const d=document.createElement("div");d.textContent=s;return d.i
 function render(){
   const hook = $("hook").value || "", caption = $("caption").value || "";
   if (!hook.trim() && !caption.trim()){
-    $("result").innerHTML = '<p class="note">Nothing to gate yet - paste a hook or caption.</p>';
+    $("result").innerHTML = '<p class="note">Nothing to gate yet - load a sample above or paste a hook or caption.</p>';
     return;
   }
   const hits = runGate($("brand").value, hook, caption);
@@ -215,7 +267,7 @@ function render(){
       '<div class="verdict-sub">' + hits.length + ' rule' + (hits.length>1?'s':'') +
       ' fired. In the pipeline this refusal costs nothing (no model call) and the variant goes to the bounded repair agent, whose rewrite re-enters this same gate.</div></div>';
     for (const h of hits){
-      html += '<div class="hit"><div class="rule">' + esc(h.id) + '</div>' +
+      html += '<div class="hit"><span class="rule">' + esc(h.id) + '</span>' +
         '<div class="match">matched: <b>' + esc(h.match) + '</b></div>' +
         '<div class="why">' + esc(h.why) + '</div></div>';
     }
@@ -226,19 +278,29 @@ function render(){
   $("result").innerHTML = html;
 }
 
+function loadSample(i){
+  const s = SAMPLES[i];
+  $("brand").value = s.brand;
+  $("hook").value = s.hook;
+  $("caption").value = s.caption;
+  render();
+  $("result").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
 $("run").addEventListener("click", render);
-$("ex-live").addEventListener("click", () => {
-  $("brand").value = "naturemade";
-  $("hook").value = "Discover Why Huggies® Is the Trusted Choice for Moms and Hospitals";
-  $("caption").value = "";
-  render();
-});
-$("ex-clean").addEventListener("click", () => {
-  $("brand").value = "naturemade";
-  $("hook").value = "3am should be for cuddles, not changes.";
-  $("caption").value = "Up to 12 hours of overnight absorbency - designed so more nights end the way they started: everyone asleep.";
-  render();
-});
+
+$("samples").innerHTML = SAMPLES.map((s, i) =>
+  '<div class="sample">' +
+  '<span class="s-label">' + esc(s.label) + '</span>' +
+  '<span class="s-hook">&ldquo;' + esc(s.hook) + '&rdquo;</span>' +
+  '<span class="s-note">' + esc(s.note) + '</span>' +
+  '<div class="s-foot"><span class="tag ' + s.expect + '">' +
+  (s.expect === "refused" ? "should be refused" : "should pass") + '</span>' +
+  '<button class="ghost" data-i="' + i + '">Load &amp; run</button></div>' +
+  '</div>'
+).join("");
+document.querySelectorAll("#samples button").forEach(b =>
+  b.addEventListener("click", () => loadSample(parseInt(b.dataset.i, 10))));
 
 $("rulelist").innerHTML = RULES.map(r =>
   '<div class="rule-line"><span class="id">' + esc(r.id) +
